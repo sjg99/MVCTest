@@ -1,0 +1,44 @@
+﻿@model MVCTest.Models.InputModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <form id="FirstForm">
+        <div class="Fields">
+            <div class="Field">
+                <div class="FieldTitle">Data 1</div>
+                @Html.EditorFor(model => model.Data1, new { htmlAttributes = new { @class = "InputContainer", @placeholder = "Data1", @title = "Data1" } })
+            </div>
+            <div class="Field">
+                <div class="FieldTitle">Data 2</div>
+                @Html.EditorFor(model => model.Data2, new { htmlAttributes = new { @class = "InputContainer", @placeholder = "Data2", @title = "Data2" } })
+            </div>
+            <div class="SaveButton">
+                <button type="submit" id="SaveButton">Send</button>
+            </div>
+        </div>
+    </form>
+    <div id="ShowResult">
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $("#SaveButton").click(function (event) {
+            var url = '/Test/ReceiveData';
+            $.post(url, $("#FirstForm").serialize(), function (res) {
+                $("#ShowResult").html(res);                
+            });
+            event.preventDefault();
+        });
+    });
+</script>
